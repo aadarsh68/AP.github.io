@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        h1 {
+            color: #ff4081;
+            font-size: 3.2rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+        }
+        
+        .question {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 18px 50px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        #yesBtn {
+            background: linear-gradient(to right, #ff4081, #ff7aa8);
+            color: white;
+        }
+        
+        #yesBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(255, 64, 129, 0.3);
+        }
+        
+        #noBtn {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            position: relative;
+        }
+        
+        #noBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(37, 117, 252, 0.3);
+        }
+        
+        .message {
+            display: none;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            animation: fadeIn 1s ease-out;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message h2 {
+            color: #ff4081;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .message p {
+            font-size: 1.8rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .message .details {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.6rem;
+        }
+        
+        .heart-icon {
+            color: #ff4081;
+            font-size: 2.5rem;
+            margin: 0 10px;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        /* Heart balloons */
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 70px;
+            z-index: 1;
+            animation: float 15s infinite linear;
+        }
+        
+        .balloon:before, .balloon:after {
+            position: absolute;
+            content: "";
+            border-radius: 50%;
+        }
+        
+        .balloon:before {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ff7aa8, #ff4081);
+            transform: rotate(45deg);
+        }
+        
+        .balloon:after {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ff7aa8, #ff4081);
+            transform: rotate(45deg);
+        }
+        
+        .string {
+            position: absolute;
+            top: 65px;
+            left: 30px;
+            width: 2px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.1); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .question {
+                font-size: 1.5rem;
+            }
+            
+            button {
+                padding: 15px 40px;
+                font-size: 1.5rem;
+            }
+            
+            .message h2 {
+                font-size: 2rem;
+            }
+            
+            .message p {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons {
+                gap: 15px;
+            }
+            
+            button {
+                padding: 12px 30px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Heart balloons will be generated by JavaScript -->
+    
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        
+        <div class="question">
+            <p>My Lovee, No other option you have🎀🎀 </p>
+        </div>
+        
+        <div class="buttons">
+            <button id="yesBtn">YES <i class="fas fa-heart"></i></button>
+            <button id="noBtn">NO <i class="fas fa-heart-broken"></i></button>
+        </div>
+        
+        <div class="message" id="message">
+            <h2><i class="fas fa-heart heart-icon"></i> I knew you'd say yes! <i class="fas fa-heart heart-icon"></i></h2>
+            <p>Happyyy Rosee Dayy Baby</p>
+            <p>I LOVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE YOU</p>
+            
+        </div>
+    </div>
+
+    <script>
+        // Create heart balloons
+        function createBalloons() {
+            const balloonColors = ['#ff4081', '#ff7aa8', '#ff4081', '#ff7aa8'];
+            const body = document.body;
+            
+            for (let i = 0; i < 12; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                
+                // Random position and animation
+                const left = Math.random() * 100;
+                const animationDuration = 12 + Math.random() * 10;
+                const animationDelay = Math.random() * 5;
+                
+                balloon.style.left = `${left}%`;
+                balloon.style.animationDuration = `${animationDuration}s`;
+                balloon.style.animationDelay = `${animationDelay}s`;
+                
+                // Add string to balloon
+                const string = document.createElement('div');
+                string.className = 'string';
+                balloon.appendChild(string);
+                
+                body.appendChild(balloon);
+            }
+        }
+        
+        // Move the NO button when user tries to click it
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const message = document.getElementById('message');
+        const buttons = document.querySelector('.buttons');
+        
+        noBtn.addEventListener('mouseover', function() {
+            moveButton();
+        });
+        
+        noBtn.addEventListener('click', function() {
+            moveButton();
+        });
+        
+        function moveButton() {
+            // Get viewport dimensions
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            
+            // Get button dimensions
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            
+            // Calculate random position within viewport
+            const maxX = vw - btnWidth - 20;
+            const maxY = vh - btnHeight - 20;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            // Apply new position
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            
+            // Add bounce animation
+            noBtn.style.animation = 'bounce 0.5s';
+            setTimeout(() => {
+                noBtn.style.animation = '';
+            }, 500);
+        }
+        
+        // Handle YES button click
+        yesBtn.addEventListener('click', function() {
+            // Show message
+            message.style.display = 'block';
+            
+            // Hide buttons
+            buttons.style.display = 'none';
+            
+            // Create celebration effect
+            createHearts();
+            
+            // Scroll to message
+            message.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Create floating hearts for celebration
+        function createHearts() {
+            const colors = ['#ff4081', '#ff7aa8', '#ff6b9d', '#ff4081'];
+            
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'fixed';
+                heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '100vh';
+                heart.style.opacity = '0.8';
+                heart.style.zIndex = '5';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                document.body.appendChild(heart);
+                
+                // Animate heart
+                const animation = heart.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+                    { transform: `translateY(-${Math.random() * 100 + 50}vh) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                });
+                
+                // Remove heart after animation
+                animation.onfinish = () => {
+                    heart.remove();
+                };
+            }
+        }
+        
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', () => {
+            createBalloons();
+            
+            // Add some initial movement to the NO button
+            setTimeout(() => {
+                moveButton();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
